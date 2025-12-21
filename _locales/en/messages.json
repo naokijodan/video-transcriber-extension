@@ -1,0 +1,8 @@
+{
+  "extName": {
+    "message": "Video Transcriber & Article Generator"
+  },
+  "extDescription": {
+    "message": "Transcribe YouTube, Vimeo, and local videos, then generate articles with AI"
+  }
+}

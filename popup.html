@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>動画文字起こし & 記事生成</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="popup-container">
+    <!-- Header -->
+    <header class="header">
+      <h1>📹 動画 → 記事生成</h1>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span class="status-badge free" id="statusBadge">無料版</span>
+        <button class="settings-btn" id="settingsBtn" title="設定">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="youtube">YouTube</button>
+      <button class="tab-btn" data-tab="vimeo">Vimeo <span class="lock-icon" id="vimeoLock">🔒</span></button>
+      <button class="tab-btn" data-tab="local">ファイル <span class="lock-icon" id="localLock">🔒</span></button>
+      <button class="tab-btn" data-tab="drive">Drive <span class="lock-icon" id="driveLock">🔒</span></button>
+      <button class="tab-btn" data-tab="text">テキスト</button>
+    </div>
+
+    <!-- YouTube Tab -->
+    <div class="tab-content active" id="youtube-tab">
+      <div class="input-group">
+        <label>YouTube URL</label>
+        <input type="url" id="youtubeUrl" placeholder="https://www.youtube.com/watch?v=...">
+        <p class="hint">現在のタブから自動取得されます</p>
+      </div>
+    </div>
+
+    <!-- Vimeo Tab -->
+    <div class="tab-content" id="vimeo-tab">
+      <div id="vimeoContent">
+        <div class="input-group">
+          <label>Vimeo URL</label>
+          <input type="url" id="vimeoUrl" placeholder="https://vimeo.com/...">
+        </div>
+      </div>
+    </div>
+
+    <!-- Local File Tab -->
+    <div class="tab-content" id="local-tab">
+      <div id="localContent">
+        <div class="file-drop-zone" id="fileDropZone">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="17,8 12,3 7,8"></polyline>
+            <line x1="12" y1="3" x2="12" y2="15"></line>
+          </svg>
+          <p>ファイルをドロップ または クリックして選択</p>
+          <p class="supported">対応形式: MP4, MP3, WAV, M4A, WebM</p>
+        </div>
+        <input type="file" id="fileInput" accept="video/*,audio/*" style="display:none;">
+        <p class="hint" id="selectedFile" style="margin-top:8px;"></p>
+      </div>
+    </div>
+
+    <!-- Google Drive Tab -->
+    <div class="tab-content" id="drive-tab">
+      <div id="driveContent">
+        <div class="input-group">
+          <label>Google Drive URL</label>
+          <input type="url" id="driveUrl" placeholder="https://drive.google.com/file/d/...">
+          <p class="hint">共有リンク（閲覧権限が必要）</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Text Input Tab -->
+    <div class="tab-content" id="text-tab">
+      <div class="input-group">
+        <label>文字起こしテキスト</label>
+        <textarea id="transcriptInput" placeholder="ここに文字起こしテキストを貼り付けてください...&#10;&#10;例：&#10;・会議の議事録&#10;・インタビューの書き起こし&#10;・動画の字幕テキスト&#10;・ポッドキャストの文字起こし" style="min-height: 200px;"></textarea>
+        <p class="hint">既にある文字起こしテキストから直接記事を生成できます</p>
+      </div>
+    </div>
+
+    <!-- AI Provider Selection -->
+    <div class="input-group" style="margin-top: 16px;">
+      <label>記事生成AI</label>
+      <div class="ai-provider-select">
+        <button class="ai-provider-btn active" data-provider="openai">
+          <span class="provider-icon">🤖</span>
+          <span class="provider-name">OpenAI</span>
+        </button>
+        <button class="ai-provider-btn" data-provider="claude">
+          <span class="provider-icon">🧠</span>
+          <span class="provider-name">Claude</span>
+        </button>
+        <button class="ai-provider-btn" data-provider="gemini">
+          <span class="provider-icon">✨</span>
+          <span class="provider-name">Gemini</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Custom Prompt (for additional custom generation) -->
+    <div class="input-group" id="customPromptGroup" style="display:none;">
+      <label>カスタムプロンプト</label>
+      <textarea id="customPrompt" placeholder="例: この内容を初心者向けに解説する記事を書いてください..."></textarea>
+      <button class="btn btn-secondary" id="generateCustomBtn" style="margin-top: 8px;">カスタム記事を生成</button>
+    </div>
+
+    <!-- Generate Button -->
+    <button class="btn btn-primary" id="generateBtn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polygon points="5,3 19,12 5,21 5,3"></polygon>
+      </svg>
+      全形式で記事を生成
+    </button>
+
+    <!-- Progress Section -->
+    <div class="progress-section" id="progressSection">
+      <div class="progress-bar">
+        <div class="fill" id="progressFill"></div>
+      </div>
+      <p class="progress-text" id="progressText">処理中...</p>
+    </div>
+
+    <!-- Transcript Section -->
+    <div class="result-section" id="transcriptSection">
+      <div class="result-header">
+        <h3>📝 文字起こし結果</h3>
+        <div class="result-actions">
+          <button class="btn btn-secondary" id="copyTranscriptBtn">コピー</button>
+          <button class="btn btn-secondary" id="toggleTranscriptBtn">折りたたむ</button>
+        </div>
+      </div>
+      <div class="result-preview" id="transcriptPreview" style="max-height: 200px;"></div>
+    </div>
+
+    <!-- Generated Articles Section -->
+    <div class="result-section" id="resultSection">
+      <div class="result-header">
+        <h3>📄 生成された記事</h3>
+      </div>
+
+      <!-- Article Type Tabs -->
+      <div class="article-tabs" id="articleTabs">
+        <button class="article-tab" data-type="blog">
+          <span class="tab-label">ブログ</span>
+          <span class="tab-status" id="status-blog">⏳</span>
+        </button>
+        <button class="article-tab" data-type="conversation">
+          <span class="tab-label">会話形式</span>
+          <span class="tab-status" id="status-conversation">⏳</span>
+        </button>
+        <button class="article-tab" data-type="summary">
+          <span class="tab-label">要約</span>
+          <span class="tab-status" id="status-summary">⏳</span>
+        </button>
+        <button class="article-tab" data-type="tutorial">
+          <span class="tab-label">チュートリアル</span>
+          <span class="tab-status" id="status-tutorial">⏳</span>
+        </button>
+        <button class="article-tab" data-type="custom" id="customTab" style="display:none;">
+          <span class="tab-label">カスタム</span>
+          <span class="tab-status" id="status-custom">⏳</span>
+        </button>
+      </div>
+
+      <!-- Article Content -->
+      <div class="article-content-wrapper">
+        <div class="result-actions" style="margin-bottom: 8px;">
+          <button class="btn btn-secondary" id="copyHtmlBtn">HTMLコピー</button>
+          <button class="btn btn-secondary" id="downloadBtn">ダウンロード</button>
+        </div>
+        <div class="result-preview" id="resultPreview"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script src="js/utils.js"></script>
+  <script src="js/youtube.js"></script>
+  <script src="js/vimeo.js"></script>
+  <script src="js/whisper.js"></script>
+  <script src="js/ai-providers.js"></script>
+  <script src="js/popup.js"></script>
+</body>
+</html>

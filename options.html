@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>設定 - 動画文字起こし & 記事生成</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="options-container">
+    <h1>⚙️ 設定</h1>
+    <p class="subtitle">APIキーと会員コードを設定してください</p>
+
+    <!-- Premium Code Section -->
+    <section class="options-section">
+      <h2>🔑 会員コード / ライセンス</h2>
+      <div class="input-group">
+        <label>会員コードを入力</label>
+        <input type="text" id="premiumCode" placeholder="コードを入力...">
+        <p class="hint">会員コードを入力すると全機能が解放されます</p>
+      </div>
+      <button class="btn btn-primary" id="activateBtn" style="margin-top: 12px;">
+        コードを有効化
+      </button>
+      <div id="premiumStatus" style="margin-top: 12px;"></div>
+    </section>
+
+    <!-- API Keys Section -->
+    <section class="options-section">
+      <h2>🔐 APIキー設定</h2>
+
+      <!-- OpenAI -->
+      <div class="input-group">
+        <label>OpenAI API Key</label>
+        <div class="api-key-input">
+          <input type="password" id="openaiKey" placeholder="sk-...">
+          <button class="toggle-visibility" data-target="openaiKey">👁</button>
+        </div>
+        <p class="hint">文字起こし（Whisper）と記事生成（GPT）に使用</p>
+      </div>
+
+      <!-- Claude -->
+      <div class="input-group">
+        <label>Anthropic API Key (Claude)</label>
+        <div class="api-key-input">
+          <input type="password" id="claudeKey" placeholder="sk-ant-...">
+          <button class="toggle-visibility" data-target="claudeKey">👁</button>
+        </div>
+        <p class="hint">記事生成にClaudeを使用する場合</p>
+      </div>
+
+      <!-- Gemini -->
+      <div class="input-group">
+        <label>Google AI API Key (Gemini)</label>
+        <div class="api-key-input">
+          <input type="password" id="geminiKey" placeholder="AIza...">
+          <button class="toggle-visibility" data-target="geminiKey">👁</button>
+        </div>
+        <p class="hint">記事生成にGeminiを使用する場合</p>
+      </div>
+
+      <button class="btn btn-primary" id="saveKeysBtn">
+        APIキーを保存
+      </button>
+    </section>
+
+    <!-- Default Settings -->
+    <section class="options-section">
+      <h2>📝 デフォルト設定</h2>
+
+      <div class="input-group">
+        <label>デフォルトの記事生成AI</label>
+        <select id="defaultProvider">
+          <option value="openai">OpenAI (GPT-4)</option>
+          <option value="claude">Claude</option>
+          <option value="gemini">Gemini</option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <label>デフォルトのテンプレート</label>
+        <select id="defaultTemplate">
+          <option value="blog">ブログ記事</option>
+          <option value="summary">要約</option>
+          <option value="tutorial">チュートリアル</option>
+          <option value="custom">カスタム</option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <label>カスタムプロンプト（デフォルト）</label>
+        <textarea id="defaultCustomPrompt" placeholder="デフォルトで使用するプロンプトを入力..."></textarea>
+      </div>
+
+      <button class="btn btn-secondary" id="saveSettingsBtn">
+        設定を保存
+      </button>
+    </section>
+
+    <!-- About -->
+    <section class="options-section">
+      <h2>ℹ️ このアプリについて</h2>
+      <p style="color: #666; font-size: 13px;">
+        動画文字起こし & 記事生成 v1.0.0<br>
+        YouTube、Vimeo、ローカル動画を文字起こしして、AIで記事を自動生成します。
+      </p>
+      <p style="color: #888; font-size: 12px; margin-top: 8px;">
+        無料版: YouTube字幕のみ対応<br>
+        有料版 / 会員: 全機能対応（Vimeo, ローカルファイル, Google Drive, Whisper文字起こし）
+      </p>
+    </section>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script src="js/utils.js"></script>
+  <script src="js/options.js"></script>
+</body>
+</html>
