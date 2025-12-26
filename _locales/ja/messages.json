@@ -1,8 +1,8 @@
 {
   "extName": {
-    "message": "動画文字起こし & 記事生成"
+    "message": "もじもじ君"
   },
   "extDescription": {
-    "message": "YouTube、Vimeo、ローカル動画を文字起こしして、AIで記事を生成します"
+    "message": "YouTube・Vimeo動画を文字起こしして、AIで記事を自動生成"
   }
 }

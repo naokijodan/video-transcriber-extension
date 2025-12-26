@@ -1,8 +1,8 @@
 {
   "extName": {
-    "message": "Video Transcriber & Article Generator"
+    "message": "Mojimoji-kun"
   },
   "extDescription": {
-    "message": "Transcribe YouTube, Vimeo, and local videos, then generate articles with AI"
+    "message": "Transcribe YouTube & Vimeo videos, generate articles with AI"
   }
 }
