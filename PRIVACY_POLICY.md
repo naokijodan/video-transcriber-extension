@@ -61,7 +61,6 @@ This extension interacts with the following third-party APIs based on your selec
 - **activeTab**: To detect video URLs on the current page
 - **storage**: To save your API keys and preferences locally
 - **tabs**: To access tab URLs for video detection
-- **scripting**: To inject content scripts for transcript extraction
 - **Host permissions**: To communicate with video platforms and AI APIs
 
 #### Your Rights
@@ -138,7 +137,6 @@ For questions about this privacy policy, please contact: naokijodan (GitHub)
 - **activeTab**: 現在のページで動画URLを検出するため
 - **storage**: APIキーと設定をローカルに保存するため
 - **tabs**: 動画検出のためにタブURLにアクセスするため
-- **scripting**: 字幕抽出のためにコンテンツスクリプトを注入するため
 - **ホスト権限**: 動画プラットフォームとAI APIと通信するため
 
 #### お客様の権利
